@@ -1,0 +1,15 @@
+server:
+  tomcat:
+    uri-encoding: utf-8
+    max-swallow-size: -1  # 不限制请求体的大小
+
+spring:
+  application:
+    name: ai-interview
+  profiles:
+    active: dev
+
+# 日志级别
+logging:
+  level:
+    root: info
