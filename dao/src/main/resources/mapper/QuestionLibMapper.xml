@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.QuestionLibMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.example.pojo.QuestionLib">
+        <id column="id" property="id" />
+        <result column="question" property="question" />
+        <result column="reference_answer" property="referenceAnswer" />
+        <result column="ai_src" property="aiSrc" />
+        <result column="interviewer_id" property="interviewerId" />
+        <result column="is_on" property="isOn" />
+        <result column="create_time" property="createTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, question, reference_answer, ai_src, interviewer_id, is_on, create_time, updated_time
+    </sql>
+
+</mapper>
