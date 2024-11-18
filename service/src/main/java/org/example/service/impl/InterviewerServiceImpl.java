@@ -46,4 +46,10 @@ public class InterviewerServiceImpl extends ServiceImpl<InterviewerMapper, Inter
     public List<Interviewer> queryAll() {
         return interviewerMapper.selectList(new QueryWrapper<Interviewer>().orderByDesc("updated_time"));
     }
+
+    @Override
+    public void delete(String interviewerId) {
+        // 删除面试官需要判断有没有职位和题库正在使用
+        interviewerMapper.deleteById(interviewerId);
+    }
 }

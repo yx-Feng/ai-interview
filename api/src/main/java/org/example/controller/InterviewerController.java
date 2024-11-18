@@ -23,14 +23,29 @@ public class InterviewerController {
     @Resource
     private IInterviewerService interviewerService;
 
+    /**
+     * 新增或修改面试官
+     * @param interviewBO
+     * @return
+     */
     @PostMapping("createOrUpdate")
     public GraceJSONResult createOrUpdate(@Valid  @RequestBody InterviewBO interviewBO) {
         interviewerService.createOrUpdate(interviewBO);
         return  GraceJSONResult.ok();
     }
 
+    /**
+     * 查询面试官列表
+     * @return
+     */
     @GetMapping("list")
-    public  GraceJSONResult list() {
+    public GraceJSONResult list() {
         return GraceJSONResult.ok(interviewerService.queryAll());
+    }
+
+    @PostMapping("delete")
+    public GraceJSONResult delete(@RequestParam String interviewerId) {
+        interviewerService.delete(interviewerId);
+        return GraceJSONResult.ok();
     }
 }

@@ -15,4 +15,6 @@ public interface IInterviewerService extends IService<Interviewer> {
     public void createOrUpdate(InterviewBO interviewBO);
 
     public List<Interviewer> queryAll();
+
+    public void delete(String interviewerId);
 }
