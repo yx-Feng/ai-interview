@@ -17,3 +17,7 @@ spring:
       idle-timeout: 600000                    # 连接超时的最大时长（毫秒），超时则会被释放（retired）
       max-lifetime: 18000000                  # 连接池的最大生命时长（毫秒），超时则会被释放（retired）
       connection-test-query: SELECT 1
+
+ai-interview:
+  frontend:
+    domain: http://127.0.0.1:5500

@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.apache.ibatis.annotations.Delete;
 import org.example.pojo.bo.InterviewBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IInterviewerService;
@@ -43,7 +44,7 @@ public class InterviewerController {
         return GraceJSONResult.ok(interviewerService.queryAll());
     }
 
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public GraceJSONResult delete(@RequestParam String interviewerId) {
         interviewerService.delete(interviewerId);
         return GraceJSONResult.ok();
