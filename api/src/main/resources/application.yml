@@ -19,7 +19,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      id-type: assign_id
+      id-type: assign_id  # 使用MyBatis-Plus默认的雪花算法生成全局唯一的主键 ID
       banner: false
       update-strategy: not_empty
   mapper-locations: classpath*:/mapper/*.xml
