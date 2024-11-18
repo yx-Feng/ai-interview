@@ -13,3 +13,18 @@ spring:
 logging:
   level:
     root: info
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id
+      banner: false
+      update-strategy: not_empty
+  mapper-locations: classpath*:/mapper/*.xml
+
+# 分页插件助手的配置
+pagehelper:
+  helper-dialect: MYSQL
+  support-methods-arguments: true
