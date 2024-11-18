@@ -5,9 +5,8 @@ import org.example.pojo.QuestionLib;
 import org.example.pojo.bo.QuestionLibBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IQuestionLibService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.example.utils.PagedGridResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Controller;
  * @author fyx
  * @since 2024-11-17
  */
-@Controller
+@RestController
 @RequestMapping("/questionLib")
 public class QuestionLibController {
 
@@ -29,5 +28,13 @@ public class QuestionLibController {
     public GraceJSONResult createOrUpdate(@RequestBody QuestionLibBO questionLibBO) {
         questionLibService.createOrUpdate(questionLibBO);
         return GraceJSONResult.ok();
+    }
+
+    @GetMapping("list")
+    public GraceJSONResult list(@RequestParam String aiName, @RequestParam String question,
+                                @RequestParam(defaultValue = "1", name = "page") Integer page,
+                                @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize) {
+        PagedGridResult gridResult = questionLibService.queryList(aiName, question, page, pageSize);
+        return GraceJSONResult.ok(gridResult);
     }
 }

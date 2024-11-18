@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.pojo.QuestionLib;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.pojo.bo.QuestionLibBO;
+import org.example.utils.PagedGridResult;
 
 /**
  * <p>
@@ -12,7 +13,9 @@ import org.example.pojo.bo.QuestionLibBO;
  * @author fyx
  * @since 2024-11-17
  */
-public interface IQuestionLibService extends IService<QuestionLib> {
+public interface IQuestionLibService {
 
     public void createOrUpdate(QuestionLibBO questionLibBO);
+
+    public PagedGridResult queryList(String aiName, String question, Integer page, Integer pageSize);
 }

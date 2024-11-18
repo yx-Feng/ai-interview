@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.QuestionLibMapperCustom">
+
+    <select id="queryQuestionLibList" parameterType="map" resultType="org.example.pojo.vo.QuestionLibVO">
+        SELECT
+            q.id as questionLibId,
+            q.question as question,
+            q.reference_answer as referenceAnswer,
+            q.ai_src as aiSrc,
+            q.is_on as isOn,
+            q.interviewer_id as interviewerId,
+            i.ai_name as interviewerName,
+            q.create_time as createTime,
+            q.updated_time as updatedTime
+        FROM
+            question_lib q
+                LEFT JOIN
+            interviewer i
+        on
+            q.interviewer_id = i.id
+        WHERE
+            1=1
+            <if test="paramMap.aiName != null and paramMap.aiName !=''">
+                and i.ai_name LIKE concat('%',#{paramMap.aiName},'%')
+            </if>
+            <if test="paramMap.question != null and paramMap.question !=''">
+                and q.question LIKE concat('%',#{paramMap.question},'%')
+            </if>
+    </select>
+
+</mapper>
