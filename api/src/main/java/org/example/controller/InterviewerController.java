@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.example.pojo.bo.InterviewBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IInterviewerService;
@@ -26,7 +27,7 @@ public class InterviewerController {
     private IInterviewerService interviewerService;
 
     @PostMapping("createOrUpdate")
-    public GraceJSONResult createOrUpdate(@RequestBody InterviewBO interviewBO) {
+    public GraceJSONResult createOrUpdate(@Valid  @RequestBody InterviewBO interviewBO) {
         interviewerService.createOrUpdate(interviewBO);
         return  GraceJSONResult.ok();
     }
