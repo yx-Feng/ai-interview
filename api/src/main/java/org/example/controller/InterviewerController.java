@@ -5,11 +5,8 @@ import jakarta.validation.Valid;
 import org.example.pojo.bo.InterviewBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IInterviewerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -30,5 +27,10 @@ public class InterviewerController {
     public GraceJSONResult createOrUpdate(@Valid  @RequestBody InterviewBO interviewBO) {
         interviewerService.createOrUpdate(interviewBO);
         return  GraceJSONResult.ok();
+    }
+
+    @GetMapping("list")
+    public  GraceJSONResult list() {
+        return GraceJSONResult.ok(interviewerService.queryAll());
     }
 }

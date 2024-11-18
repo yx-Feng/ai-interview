@@ -1,6 +1,7 @@
 package org.example.service.impl;
 
 import ch.qos.logback.core.util.StringUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Resource;
 import org.example.pojo.Interviewer;
@@ -12,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -38,5 +40,10 @@ public class InterviewerServiceImpl extends ServiceImpl<InterviewerMapper, Inter
         } else {
             interviewerMapper.updateById(interviewer);
         }
+    }
+
+    @Override
+    public List<Interviewer> queryAll() {
+        return interviewerMapper.selectList(new QueryWrapper<Interviewer>().orderByDesc("updated_time"));
     }
 }
