@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.pojo.QuestionLib;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.pojo.bo.QuestionLibBO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IQuestionLibService extends IService<QuestionLib> {
 
+    public void createOrUpdate(QuestionLibBO questionLibBO);
 }

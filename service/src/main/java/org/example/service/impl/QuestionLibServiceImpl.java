@@ -1,10 +1,18 @@
 package org.example.service.impl;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
+import org.example.enums.YesOrNo;
 import org.example.pojo.QuestionLib;
 import org.example.mapper.QuestionLibMapper;
+import org.example.pojo.bo.QuestionLibBO;
 import org.example.service.IQuestionLibService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -17,4 +25,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuestionLibServiceImpl extends ServiceImpl<QuestionLibMapper, QuestionLib> implements IQuestionLibService {
 
+    @Resource
+    private QuestionLibMapper questionLibMapper;
+
+    @Override
+    public void createOrUpdate(QuestionLibBO questionLibBO) {
+        QuestionLib questionLib = new QuestionLib();
+        BeanUtils.copyProperties(questionLibBO, questionLib);
+        questionLib.setUpdatedTime(LocalDateTime.now());
+
+        if(StringUtils.isBlank(questionLib.getId())) {
+            questionLib.setIsOn(YesOrNo.YES.type);
+            questionLib.setCreateTime(LocalDateTime.now());
+            questionLibMapper.insert(questionLib);
+        } else {
+            questionLibMapper.updateById(questionLib);
+        }
+    }
 }
