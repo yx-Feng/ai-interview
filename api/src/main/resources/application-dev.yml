@@ -21,3 +21,11 @@ spring:
 ai-interview:
   frontend:
     domain: http://127.0.0.1:5500
+
+# MinIO配置
+minio:
+  endpoint: http://127.0.0.1:9000   # MinIO服务地址
+  fileHost: http://127.0.0.1:9000
+  bucketName: ai-interviewer
+  accessKey: imooc
+  secretKey: imooc123456

@@ -1,13 +1,17 @@
 server:
   tomcat:
     uri-encoding: utf-8
-    max-swallow-size: -1  # 不限制请求体的大小
+#    max-swallow-size: -1  # 不限制请求体的大小
 
 spring:
   application:
     name: ai-interview
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 10MB      # 文件上传大小的限制
+      max-request-size: 10MB   # 文件最大请求限制
 
 # 日志级别
 logging:
