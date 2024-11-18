@@ -67,4 +67,13 @@ public class QuestionLibServiceImpl extends BaseInfoProperties implements IQuest
         List<QuestionLibVO> list = questionLibMapperCustom.queryQuestionLibList(map);
         return setterPagedGrid(list, page);
     }
+
+    @Override
+    public void setDisplayOrNot(String questionLibId, Integer isOn) {
+        QuestionLib questionLib = new QuestionLib();
+        questionLib.setId(questionLibId);
+        questionLib.setIsOn(isOn);
+        questionLib.setUpdatedTime(LocalDateTime.now());
+        questionLibMapper.updateById(questionLib);
+    }
 }

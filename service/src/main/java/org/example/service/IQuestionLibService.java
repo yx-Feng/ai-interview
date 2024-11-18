@@ -18,4 +18,11 @@ public interface IQuestionLibService {
     public void createOrUpdate(QuestionLibBO questionLibBO);
 
     public PagedGridResult queryList(String aiName, String question, Integer page, Integer pageSize);
+
+    /**
+     * 设置是否开启面试题对外显示
+     * @param questionLibId
+     * @param isOn
+     */
+    public void setDisplayOrNot(String questionLibId, Integer isOn);
 }

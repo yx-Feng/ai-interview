@@ -16,5 +16,5 @@ public class QuestionLibBO {
     private String referenceAnswer;
     private String aiSrc;
     private String interviewerId;
-    private String isOn;
+    private int isOn;
 }

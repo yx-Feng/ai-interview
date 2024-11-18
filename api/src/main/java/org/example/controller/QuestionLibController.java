@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
+import org.example.enums.YesOrNo;
 import org.example.pojo.QuestionLib;
 import org.example.pojo.bo.QuestionLibBO;
 import org.example.result.GraceJSONResult;
@@ -36,5 +38,21 @@ public class QuestionLibController {
                                 @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize) {
         PagedGridResult gridResult = questionLibService.queryList(aiName, question, page, pageSize);
         return GraceJSONResult.ok(gridResult);
+    }
+
+    // 设置显示
+    @PostMapping("show")
+    public GraceJSONResult show(@RequestParam String questionLibId) {
+        if (StringUtils.isBlank(questionLibId)) return GraceJSONResult.error();
+        questionLibService.setDisplayOrNot(questionLibId, YesOrNo.YES.type);
+        return GraceJSONResult.ok();
+    }
+
+    // 设置隐藏
+    @PostMapping("hide")
+    public GraceJSONResult hide(@RequestParam String questionLibId) {
+        if (StringUtils.isBlank(questionLibId)) return GraceJSONResult.error();
+        questionLibService.setDisplayOrNot(questionLibId, YesOrNo.NO.type);
+        return GraceJSONResult.ok();
     }
 }
