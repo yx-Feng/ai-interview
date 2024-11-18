@@ -55,4 +55,10 @@ public class QuestionLibController {
         questionLibService.setDisplayOrNot(questionLibId, YesOrNo.NO.type);
         return GraceJSONResult.ok();
     }
+
+    @PostMapping("delete")
+    public GraceJSONResult delete(@RequestParam String questionLibId) {
+        questionLibService.delete(questionLibId);
+        return GraceJSONResult.ok();
+    }
 }

@@ -25,4 +25,6 @@ public interface IQuestionLibService {
      * @param isOn
      */
     public void setDisplayOrNot(String questionLibId, Integer isOn);
+
+    public void delete(String questionLibId);
 }

@@ -76,4 +76,10 @@ public class QuestionLibServiceImpl extends BaseInfoProperties implements IQuest
         questionLib.setUpdatedTime(LocalDateTime.now());
         questionLibMapper.updateById(questionLib);
     }
+
+    @Override
+    public void delete(String questionLibId) {
+        questionLibMapper.deleteById(questionLibId);
+    }
+
 }
