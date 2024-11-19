@@ -1,14 +1,18 @@
 package org.example.service.impl;
 
-import ch.qos.logback.core.util.StringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.micrometer.common.util.StringUtils;
 import jakarta.annotation.Resource;
+import org.example.exception.GraceException;
 import org.example.pojo.Interviewer;
 import org.example.mapper.InterviewerMapper;
 import org.example.pojo.bo.InterviewBO;
+import org.example.result.GraceJSONResult;
+import org.example.result.ResponseStatusEnum;
 import org.example.service.IInterviewerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.example.service.IJobService;
+import org.example.service.IQuestionLibService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,12 @@ public class InterviewerServiceImpl extends ServiceImpl<InterviewerMapper, Inter
 
     @Resource
     private InterviewerMapper interviewerMapper;
+
+    @Resource
+    private IJobService jobService;
+
+    @Resource
+    private IQuestionLibService questionLibService;
 
     @Override
     public void createOrUpdate(InterviewBO interviewBO) {
@@ -50,6 +60,11 @@ public class InterviewerServiceImpl extends ServiceImpl<InterviewerMapper, Inter
     @Override
     public void delete(String interviewerId) {
         // 删除面试官需要判断有没有职位和题库正在使用
+        boolean jobFlag = jobService.isJobContainInterviewer(interviewerId);
+        boolean questionFlag = questionLibService.isQuestionLibContainInterviewer(interviewerId);
+        if(jobFlag || questionFlag) {
+            GraceException.display(ResponseStatusEnum.CAN_NOT_DELETE_INTERVIEWER);
+        }
         interviewerMapper.deleteById(interviewerId);
     }
 }

@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.github.pagehelper.PageHelper;
 import jakarta.annotation.Resource;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.example.base.BaseInfoProperties;
 import org.example.enums.YesOrNo;
 import org.example.mapper.QuestionLibMapperCustom;
+import org.example.pojo.Job;
 import org.example.pojo.QuestionLib;
 import org.example.mapper.QuestionLibMapper;
 import org.example.pojo.bo.QuestionLibBO;
@@ -80,6 +82,14 @@ public class QuestionLibServiceImpl extends BaseInfoProperties implements IQuest
     @Override
     public void delete(String questionLibId) {
         questionLibMapper.deleteById(questionLibId);
+    }
+
+    @Override
+    public boolean isQuestionLibContainInterviewer(String interviewerId) {
+        QueryWrapper<QuestionLib> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("interviewer_id", interviewerId);
+        Long counts = questionLibMapper.selectCount(queryWrapper);
+        return counts > 0 ? true : false;
     }
 
 }

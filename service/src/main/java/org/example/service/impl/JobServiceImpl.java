@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -64,5 +65,13 @@ public class JobServiceImpl extends BaseInfoProperties implements IJobService {
     public void delete(String jobId) {
         // 删除职位的时候，判断有没有未面试的候选人在使用
         jobMapper.deleteById(jobId);
+    }
+
+    @Override
+    public boolean isJobContainInterviewer(String interviewerId) {
+        QueryWrapper<Job> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("interviewer_id", interviewerId);
+        Long counts = jobMapper.selectCount(queryWrapper);
+        return counts > 0 ? true : false;
     }
 }

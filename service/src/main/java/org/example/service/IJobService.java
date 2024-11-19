@@ -21,4 +21,7 @@ public interface IJobService {
     public Job getDetail(String jobId);
 
     public void delete(String jobId);
+
+    // 判断所有职位是否包含某个面试官
+    public boolean isJobContainInterviewer(String interviewerId);
 }

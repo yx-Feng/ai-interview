@@ -27,4 +27,7 @@ public interface IQuestionLibService {
     public void setDisplayOrNot(String questionLibId, Integer isOn);
 
     public void delete(String questionLibId);
+
+    // 判断所有面试题库中是否包含某个面试官
+    public boolean isQuestionLibContainInterviewer(String interviewerId);
 }
