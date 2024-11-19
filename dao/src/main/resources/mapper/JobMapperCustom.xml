@@ -30,5 +30,7 @@
             j.job_name as jobName
         From
             job j
+        WHERE
+            j.`status` = 1
     </select>
 </mapper>
