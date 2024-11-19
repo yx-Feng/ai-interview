@@ -35,4 +35,15 @@ public class CandidateController {
         PagedGridResult gridResult = candidateService.queryList(realName, mobile, page, pageSize);
         return GraceJSONResult.ok(gridResult);
     }
+
+    @GetMapping("detail")
+    public GraceJSONResult detail(@RequestParam String candidateId) {
+        return GraceJSONResult.ok(candidateService.getDetail(candidateId));
+    }
+
+    @PostMapping("delete")
+    public GraceJSONResult delete(@RequestParam String candidateId) {
+        candidateService.delete(candidateId);
+        return GraceJSONResult.ok();
+    }
 }

@@ -17,4 +17,8 @@ public interface ICandidateService {
     public void createOrUpdate(CandidateBO candidateBO);
 
     public PagedGridResult queryList(String realName, String mobile, Integer page, Integer pageSize);
+
+    public Candidate getDetail(String candidateId);
+
+    public void delete(String candidateId);
 }
