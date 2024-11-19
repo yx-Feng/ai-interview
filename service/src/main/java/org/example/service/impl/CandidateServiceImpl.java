@@ -1,16 +1,25 @@
 package org.example.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.example.base.BaseInfoProperties;
+import org.example.mapper.CandidateMapperCustom;
 import org.example.pojo.Candidate;
 import org.example.mapper.CandidateMapper;
 import org.example.pojo.bo.CandidateBO;
+import org.example.pojo.vo.CandidateVO;
 import org.example.service.ICandidateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.example.utils.PagedGridResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,10 +30,13 @@ import java.time.LocalDateTime;
  * @since 2024-11-17
  */
 @Service
-public class CandidateServiceImpl extends ServiceImpl<CandidateMapper, Candidate> implements ICandidateService {
+public class CandidateServiceImpl extends BaseInfoProperties implements ICandidateService {
 
     @Resource
     private CandidateMapper candidateMapper;
+
+    @Resource
+    private CandidateMapperCustom candidateMapperCustom;
 
     @Override
     public void createOrUpdate(CandidateBO candidateBO) {
@@ -37,5 +49,20 @@ public class CandidateServiceImpl extends ServiceImpl<CandidateMapper, Candidate
         } else {
             candidateMapper.updateById(candidate);
         }
+    }
+
+    @Override
+    public PagedGridResult queryList(String realName, String mobile, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+
+        Map<String, Object> map = new HashMap<>();
+        if(StringUtils.isNotBlank(realName)) {
+            map.put("realName", realName);
+        }
+        if(StringUtils.isNotBlank(mobile)) {
+            map.put("mobile", mobile);
+        }
+        List<CandidateVO> list = candidateMapperCustom.queryCandidateLibList(map);
+        return setterPagedGrid(list, page);
     }
 }

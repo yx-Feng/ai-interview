@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.pojo.Candidate;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.pojo.bo.CandidateBO;
+import org.example.utils.PagedGridResult;
 
 /**
  * <p>
@@ -14,4 +15,6 @@ import org.example.pojo.bo.CandidateBO;
  */
 public interface ICandidateService {
     public void createOrUpdate(CandidateBO candidateBO);
+
+    public PagedGridResult queryList(String realName, String mobile, Integer page, Integer pageSize);
 }
