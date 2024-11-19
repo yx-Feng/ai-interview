@@ -24,4 +24,11 @@
         DESC
     </select>
 
+    <select id="queryNameList" parameterType="map" resultType="hashmap">
+        SELECT
+            j.id as jobId,
+            j.job_name as jobName
+        From
+            job j
+    </select>
 </mapper>

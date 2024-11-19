@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.pojo.bo.JobBO;
 import org.example.utils.PagedGridResult;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * <p>
  * 职位信息表 服务类
@@ -24,4 +27,6 @@ public interface IJobService {
 
     // 判断所有职位是否包含某个面试官
     public boolean isJobContainInterviewer(String interviewerId);
+
+    public List<HashMap<String, String>> nameList();
 }

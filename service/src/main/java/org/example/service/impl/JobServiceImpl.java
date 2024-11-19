@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -73,5 +74,10 @@ public class JobServiceImpl extends BaseInfoProperties implements IJobService {
         queryWrapper.eq("interviewer_id", interviewerId);
         Long counts = jobMapper.selectCount(queryWrapper);
         return counts > 0 ? true : false;
+    }
+
+    @Override
+    public List<HashMap<String, String>> nameList() {
+        return jobMapperCustom.queryNameList(null);
     }
 }

@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.pojo.Candidate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.pojo.bo.CandidateBO;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author fyx
  * @since 2024-11-17
  */
-public interface ICandidateService extends IService<Candidate> {
-
+public interface ICandidateService {
+    public void createOrUpdate(CandidateBO candidateBO);
 }
