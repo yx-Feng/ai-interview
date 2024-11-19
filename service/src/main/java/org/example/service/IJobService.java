@@ -17,4 +17,8 @@ public interface IJobService {
     public void createOrUpdate(JobBO jobBO);
 
     public PagedGridResult queryList(Integer page, Integer pageSize);
+
+    public Job getDetail(String jobId);
+
+    public void delete(String jobId);
 }

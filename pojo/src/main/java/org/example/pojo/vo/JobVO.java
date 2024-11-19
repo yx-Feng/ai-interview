@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class JobVO {
 
-    private String id;
+    private String jobId;
     private String jobName;
     private String jobDesc;
     private Integer status;

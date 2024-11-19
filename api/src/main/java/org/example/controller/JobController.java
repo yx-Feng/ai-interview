@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Param;
 import org.example.pojo.bo.JobBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IJobService;
@@ -33,5 +34,20 @@ public class JobController {
                                 @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize) {
         PagedGridResult gridResult = jobService.queryList(page, pageSize);
         return GraceJSONResult.ok(gridResult);
+    }
+
+    /**
+     * 获得职位详情
+     * @return
+     */
+    @GetMapping("detail")
+    public GraceJSONResult list(@RequestParam String jobId) {
+        return GraceJSONResult.ok(jobService.getDetail(jobId));
+    }
+
+    @PostMapping ("delete")
+    public GraceJSONResult delete(@RequestParam String jobId) {
+        jobService.delete(jobId);
+        return GraceJSONResult.ok();
     }
 }

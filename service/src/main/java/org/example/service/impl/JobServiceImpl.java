@@ -55,4 +55,14 @@ public class JobServiceImpl extends BaseInfoProperties implements IJobService {
         return setterPagedGrid(list, page);
     }
 
+    @Override
+    public Job getDetail(String jobId) {
+        return jobMapper.selectById(jobId);
+    }
+
+    @Override
+    public void delete(String jobId) {
+        // 删除职位的时候，判断有没有未面试的候选人在使用
+        jobMapper.deleteById(jobId);
+    }
 }
