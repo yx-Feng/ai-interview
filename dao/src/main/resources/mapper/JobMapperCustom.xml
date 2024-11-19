@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.JobMapperCustom">
+
+    <select id="queryJobList" parameterType="map" resultType="org.example.pojo.vo.JobVO">
+        SELECT
+            j.id as jobId,
+            j.job_name as jobName,
+            j.job_desc as jobDesc,
+            j.`status` as `status`,
+            j.prompt as prompt,
+            j.interviewer_id as interviewerId,
+            i.ai_name as interviewerName,
+            j.create_time as createTime,
+            j.updated_time as updatedTime
+        FROM
+            job j
+        LEFT JOIN
+            interviewer i
+        on
+            j.interviewer_id = i.id
+        ORDER BY
+            j.updated_time
+        DESC
+    </select>
+
+</mapper>

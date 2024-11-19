@@ -4,10 +4,8 @@ import jakarta.annotation.Resource;
 import org.example.pojo.bo.JobBO;
 import org.example.result.GraceJSONResult;
 import org.example.service.IJobService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.utils.PagedGridResult;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -28,5 +26,12 @@ public class JobController {
     public GraceJSONResult createOrUpdate(@RequestBody JobBO jobBO) {
         jobService.createOrUpdate(jobBO);
         return GraceJSONResult.ok();
+    }
+
+    @GetMapping("list")
+    public GraceJSONResult list(@RequestParam(defaultValue = "1", name = "page") Integer page,
+                                @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize) {
+        PagedGridResult gridResult = jobService.queryList(page, pageSize);
+        return GraceJSONResult.ok(gridResult);
     }
 }
