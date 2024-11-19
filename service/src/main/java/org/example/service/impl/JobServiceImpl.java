@@ -1,10 +1,16 @@
 package org.example.service.impl;
 
+import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.example.pojo.Job;
 import org.example.mapper.JobMapper;
+import org.example.pojo.bo.JobBO;
 import org.example.service.IJobService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -15,6 +21,21 @@ import org.springframework.stereotype.Service;
  * @since 2024-11-17
  */
 @Service
-public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements IJobService {
+public class JobServiceImpl implements IJobService {
 
+    @Resource
+    private JobMapper jobMapper;
+
+    @Override
+    public void createOrUpdate(JobBO jobBO) {
+        Job job = new Job();
+        BeanUtils.copyProperties(jobBO, job);
+        job.setUpdatedTime(LocalDateTime.now());
+        if(StringUtils.isBlank(job.getId())) {
+            job.setCreateTime(LocalDateTime.now());
+            jobMapper.insert(job);
+        } else {
+            jobMapper.updateById(job);
+        }
+     }
 }

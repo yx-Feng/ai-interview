@@ -9,12 +9,12 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionLibBO {
+public class JobBO {
 
     private String id;
-    private String question;
-    private String referenceAnswer;
-    private String aiSrc;
+    private String jobName;
+    private String jobDesc;
+    private Integer status;
     private String interviewerId;
-    private Integer isOn;
+    private String prompt;
 }

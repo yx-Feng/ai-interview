@@ -18,7 +18,7 @@ public class QuestionLibVO {
     private String referenceAnswer;
     private String aiSrc;
     private String interviewerId;
-    private int isOn;
+    private Integer isOn;
     private String interviewerName;
     private LocalDateTime createTime;
     private LocalDateTime updatedTime;
