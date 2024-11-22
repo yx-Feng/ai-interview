@@ -1,6 +1,9 @@
 package org.example.controller;
 
+import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.example.result.GraceJSONResult;
+import org.example.utils.SMSUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,8 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("welcome")
 public class WelcomeController {
 
+    @Resource
+    private SMSUtils smsUtils;
+
     @PostMapping("getSMSCode")
-    public GraceJSONResult getSMSCode(String mobile) {
+    public GraceJSONResult getSMSCode(String mobile) throws Exception {
+        if(StringUtils.isBlank(mobile)) {
+            return GraceJSONResult.error();
+        }
+        String code = (int)((Math.random() * 9 + 1) * 100000) + ""; // 随机生成6位验证码
+        smsUtils.sendSMS(mobile, code);
+        //System.out.println(code);
         return  GraceJSONResult.ok();
     }
 
