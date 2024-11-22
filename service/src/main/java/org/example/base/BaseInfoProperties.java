@@ -3,6 +3,7 @@ package org.example.base;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.example.utils.PagedGridResult;
+import org.example.utils.RedisOperator;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -11,8 +12,8 @@ import java.util.List;
 
 public class BaseInfoProperties {
 
-//    @Resource
-//    public RedisOperator redis;
+    @Resource
+    public RedisOperator redis;
 
     public static final String DEFAULT_USER_FACE = "";
 

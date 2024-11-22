@@ -2,6 +2,7 @@ package org.example.controller;
 
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.example.base.BaseInfoProperties;
 import org.example.result.GraceJSONResult;
 import org.example.utils.SMSUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("welcome")
-public class WelcomeController {
+public class WelcomeController extends BaseInfoProperties {
 
     @Resource
     private SMSUtils smsUtils;
@@ -21,8 +22,12 @@ public class WelcomeController {
             return GraceJSONResult.error();
         }
         String code = (int)((Math.random() * 9 + 1) * 100000) + ""; // 随机生成6位验证码
-        smsUtils.sendSMS(mobile, code);
-        //System.out.println(code);
+        // smsUtils.sendSMS(mobile, code);
+        System.out.println(code);
+
+        // 把验证码存入redis中，用于后续进入面试的校验
+        redis.set(MOBILE_SMSCODE + ":" + mobile, code, 10*60);
+
         return  GraceJSONResult.ok();
     }
 
