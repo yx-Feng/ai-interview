@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -74,6 +75,12 @@ public class CandidateServiceImpl extends BaseInfoProperties implements ICandida
     @Override
     public void delete(String candidateId) {
         candidateMapper.deleteById(candidateId);
+    }
+
+    @Override
+    public Candidate queryByMobileIsExist(String mobile) {
+        Candidate candidate = candidateMapper.selectOne(new QueryWrapper<Candidate>().eq("mobile", mobile));
+        return candidate;
     }
 
 }

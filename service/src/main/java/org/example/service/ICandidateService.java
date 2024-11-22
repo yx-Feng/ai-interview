@@ -21,4 +21,7 @@ public interface ICandidateService {
     public Candidate getDetail(String candidateId);
 
     public void delete(String candidateId);
+
+    // 判断用户是否存在，如果存在，返回用户信息，否则null
+    public Candidate queryByMobileIsExist(String mobile);
 }
