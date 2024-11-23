@@ -12,7 +12,10 @@ import org.example.pojo.Job;
 import org.example.pojo.QuestionLib;
 import org.example.mapper.QuestionLibMapper;
 import org.example.pojo.bo.QuestionLibBO;
+import org.example.pojo.vo.InitQuestionsVO;
 import org.example.pojo.vo.QuestionLibVO;
+import org.example.service.ICandidateService;
+import org.example.service.IJobService;
 import org.example.service.IQuestionLibService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.utils.PagedGridResult;
@@ -20,9 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -40,6 +41,12 @@ public class QuestionLibServiceImpl extends BaseInfoProperties implements IQuest
 
     @Resource
     private QuestionLibMapperCustom questionLibMapperCustom;
+
+    @Resource
+    private ICandidateService candidateService;
+
+    @Resource
+    private IJobService jobService;
 
     @Override
     public void createOrUpdate(QuestionLibBO questionLibBO) {
@@ -90,6 +97,41 @@ public class QuestionLibServiceImpl extends BaseInfoProperties implements IQuest
         queryWrapper.eq("interviewer_id", interviewerId);
         Long counts = questionLibMapper.selectCount(queryWrapper);
         return counts > 0 ? true : false;
+    }
+
+    @Override
+    public List<InitQuestionsVO> getRandomQuestions(String candidateId, Integer questionNum) {
+        // 1. 获得负责面试该应聘者的面试官
+        String jobId = candidateService.getDetail(candidateId).getJobId();
+        String interviewId = jobService.getDetail(jobId).getInterviewerId();
+
+        // 2. 根据面试官获得其所有面试题总数
+        Long questionCounts = questionLibMapper.selectCount(new QueryWrapper<QuestionLib>().eq("interviewer_id", interviewId));
+
+        // 3. 根据题库总数获得指定数量的面试题
+        List<Long> randomList = new ArrayList<>();
+        for (int i = 0; i < questionNum; i++) {
+            Random random = new Random();
+            long randomNum = random.nextLong(questionCounts);
+            if(randomList.contains(randomNum)) {
+                // 如果包含则继续循环
+                questionNum++;
+                continue;
+            } else {
+                randomList.add(randomNum);
+            }
+        }
+
+        // 4. 根据索引从数据库中获得面试题
+        List<InitQuestionsVO> questionsList = new ArrayList<>();
+        for (Long l : randomList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("indexNum", l);
+            InitQuestionsVO question = questionLibMapperCustom.queryRandomQuestion(map);
+            questionsList.add(question);
+        }
+
+        return questionsList;
     }
 
 }

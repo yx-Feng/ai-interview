@@ -2,14 +2,19 @@ package org.example.controller;
 
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.example.base.BaseInfoProperties;
 import org.example.enums.YesOrNo;
 import org.example.pojo.QuestionLib;
 import org.example.pojo.bo.QuestionLibBO;
+import org.example.pojo.vo.InitQuestionsVO;
 import org.example.result.GraceJSONResult;
+import org.example.result.ResponseStatusEnum;
 import org.example.service.IQuestionLibService;
 import org.example.utils.PagedGridResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 /**
  * <p>
@@ -21,7 +26,7 @@ import org.springframework.stereotype.Controller;
  */
 @RestController
 @RequestMapping("/questionLib")
-public class QuestionLibController {
+public class QuestionLibController extends BaseInfoProperties {
 
     @Resource
     private IQuestionLibService questionLibService;
@@ -60,5 +65,19 @@ public class QuestionLibController {
     public GraceJSONResult delete(@RequestParam String questionLibId) {
         questionLibService.delete(questionLibId);
         return GraceJSONResult.ok();
+    }
+
+    // 准备面试题，随机获得一定数量的面试题，返回给前端
+    @GetMapping("prepareQuestion")
+    public GraceJSONResult prepareQuestion(@RequestParam String candidateId) {
+        // 判断应聘者候选人是否在会话中，限制接口被恶意调用
+        String candidateInfo = redis.get(REDIS_USER_INFO+":"+candidateId);
+        String userToken = redis.get(REDIS_USER_TOKEN+":"+candidateId);
+        if(StringUtils.isBlank(candidateInfo) || StringUtils.isBlank(userToken)) {
+            return GraceJSONResult.errorCustom(ResponseStatusEnum.USER_INFO_NOT_EXIST_ERROR);
+        }
+        List<InitQuestionsVO> result = questionLibService.getRandomQuestions(candidateId, 10);
+
+        return GraceJSONResult.ok(result);
     }
 }

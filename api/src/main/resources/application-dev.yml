@@ -31,7 +31,7 @@ ai-interview:
 # MinIO配置
 minio:
   endpoint: http://127.0.0.1:9000   # MinIO服务地址
-  fileHost: http://127.0.0.1:9000
+  fileHost: http://10.100.93.244:9000
   bucketName: ai-interviewer
   accessKey: imooc
   secretKey: imooc123456

@@ -3,7 +3,10 @@ package org.example.service;
 import org.example.pojo.QuestionLib;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.pojo.bo.QuestionLibBO;
+import org.example.pojo.vo.InitQuestionsVO;
 import org.example.utils.PagedGridResult;
+
+import java.util.List;
 
 /**
  * <p>
@@ -30,4 +33,7 @@ public interface IQuestionLibService {
 
     // 判断所有面试题库中是否包含某个面试官
     public boolean isQuestionLibContainInterviewer(String interviewerId);
+
+    // 获得指定随机数量的面试题
+    public List<InitQuestionsVO> getRandomQuestions(String candidateId, Integer questionNum);
 }

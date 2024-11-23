@@ -29,4 +29,16 @@
             </if>
     </select>
 
+    <select id="queryRandomQuestion" parameterType="map" resultType="org.example.pojo.vo.InitQuestionsVO">
+        SELECT
+            q.id as questionLibId,
+            q.question as question,
+            q.reference_answer as referenceAnswer,
+            q.ai_src as aiSrc,
+            q.interviewer_id as interviewerId
+        FROM question_lib q
+        WHERE q.is_on=1
+        LIMIT #{paramMap.indexNum}, 1
+    </select>
+
 </mapper>
