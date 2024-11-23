@@ -1,16 +1,15 @@
 package org.example.controller;
 
-import com.google.common.base.Verify;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.example.base.BaseInfoProperties;
 import org.example.pojo.Candidate;
-import org.example.pojo.bo.CandidateBO;
 import org.example.pojo.bo.VerifySMSBO;
 import org.example.pojo.vo.CandidateVO;
 import org.example.result.GraceJSONResult;
 import org.example.result.ResponseStatusEnum;
 import org.example.service.ICandidateService;
+import org.example.service.IInterviewRecordService;
 import org.example.utils.JsonUtils;
 import org.example.utils.SMSUtils;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +30,9 @@ public class WelcomeController extends BaseInfoProperties {
 
     @Resource
     private ICandidateService candidateService;
+
+    @Resource
+    private IInterviewRecordService interviewRecordService;
 
     @PostMapping("getSMSCode")
     public GraceJSONResult getSMSCode(String mobile) throws Exception {
@@ -67,6 +69,10 @@ public class WelcomeController extends BaseInfoProperties {
             return GraceJSONResult.errorCustom(ResponseStatusEnum.USER_INFO_NOT_EXIST_ERROR);
         } else {
             // 2.2 如果不为空，则需要判断用户是否已经面试过，如果面试过，则无法再面试
+            boolean isExist = interviewRecordService.isCandidateRecordExist(candidate.getId());
+            if(isExist) {
+                return GraceJSONResult.errorCustom(ResponseStatusEnum.USER_ALREADY_DID_INTERVIEW_ERROR);
+            }
         }
 
         // 3. 保存用户token信息，保存分布式会话到Redis中

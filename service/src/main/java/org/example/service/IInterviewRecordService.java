@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IInterviewRecordService {
 
     public void save(InterviewRecord interviewRecord);
+
+    public boolean isCandidateRecordExist(String candidateId);
 }
