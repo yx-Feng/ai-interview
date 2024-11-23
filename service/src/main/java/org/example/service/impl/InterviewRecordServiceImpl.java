@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+import jakarta.annotation.Resource;
 import org.example.pojo.InterviewRecord;
 import org.example.mapper.InterviewRecordMapper;
 import org.example.service.IInterviewRecordService;
@@ -15,6 +16,13 @@ import org.springframework.stereotype.Service;
  * @since 2024-11-17
  */
 @Service
-public class InterviewRecordServiceImpl extends ServiceImpl<InterviewRecordMapper, InterviewRecord> implements IInterviewRecordService {
+public class InterviewRecordServiceImpl implements IInterviewRecordService {
 
+    @Resource
+    private InterviewRecordMapper interviewRecordMapper;
+
+    @Override
+    public void save(InterviewRecord interviewRecord) {
+        interviewRecordMapper.insert(interviewRecord);
+    }
 }

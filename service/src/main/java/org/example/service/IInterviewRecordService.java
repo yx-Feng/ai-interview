@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author fyx
  * @since 2024-11-17
  */
-public interface IInterviewRecordService extends IService<InterviewRecord> {
+public interface IInterviewRecordService {
 
+    public void save(InterviewRecord interviewRecord);
 }
